@@ -25,13 +25,12 @@ from PIL import Image
 
 import torchvision.transforms as transforms
 import torchvision.datasets as dset
-# from scipy.misc import imread
-from roi_data_layer.roidb import combined_roidb
-from roi_data_layer.roibatchLoader import roibatchLoader
+from torchvision.ops import nms
+
 from model.utils.config import cfg, cfg_from_file, cfg_from_list, get_output_dir
 from model.rpn.bbox_transform import clip_boxes
 # from model.nms.nms_wrapper import nms
-from model.roi_layers import nms
+#from model.roi_layers import nms
 from model.rpn.bbox_transform import bbox_transform_inv
 from model.utils.net_utils import save_net, load_net, vis_detections, vis_detections_PIL, vis_detections_filtered_objects_PIL, vis_detections_filtered_objects # (1) here add a function to viz
 from model.utils.blob import im_list_to_blob
