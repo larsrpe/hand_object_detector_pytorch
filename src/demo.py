@@ -7,7 +7,6 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import _init_paths
 import os
 import sys
 import numpy as np
@@ -27,21 +26,16 @@ import torchvision.transforms as transforms
 import torchvision.datasets as dset
 from torchvision.ops import nms
 
-from model.utils.config import cfg, cfg_from_file, cfg_from_list, get_output_dir
-from model.rpn.bbox_transform import clip_boxes
+from src.lib.model.utils.config import cfg, cfg_from_file, cfg_from_list, get_output_dir
+from src.lib.model.rpn.bbox_transform import clip_boxes
 # from model.nms.nms_wrapper import nms
 #from model.roi_layers import nms
-from model.rpn.bbox_transform import bbox_transform_inv
-from model.utils.net_utils import save_net, load_net, vis_detections, vis_detections_PIL, vis_detections_filtered_objects_PIL, vis_detections_filtered_objects # (1) here add a function to viz
-from model.utils.blob import im_list_to_blob
-from model.faster_rcnn.vgg16 import vgg16
-from model.faster_rcnn.resnet import resnet
+from src.lib.model.rpn.bbox_transform import bbox_transform_inv
+from src.lib.model.utils.net_utils import save_net, load_net, vis_detections, vis_detections_PIL, vis_detections_filtered_objects_PIL, vis_detections_filtered_objects # (1) here add a function to viz
+from src.lib.model.utils.blob import im_list_to_blob
+from src.lib.model.faster_rcnn.vgg16 import vgg16
+from src.lib.model.faster_rcnn.resnet import resnet
 import pdb
-
-try:
-    xrange          # Python 2
-except NameError:
-    xrange = range  # Python 3
 
 
 def parse_args():
@@ -171,7 +165,7 @@ if __name__ == '__main__':
 
   pascal_classes = np.asarray(['__background__', 'targetobject', 'hand']) 
   args.set_cfgs = ['ANCHOR_SCALES', '[8, 16, 32, 64]', 'ANCHOR_RATIOS', '[0.5, 1, 2]'] 
-
+  print('class agnostic: ', args.class_agnostic)
   # initilize the network here.
   if args.net == 'vgg16':
     fasterRCNN = vgg16(pascal_classes, pretrained=False, class_agnostic=args.class_agnostic)
@@ -304,11 +298,14 @@ if __name__ == '__main__':
         lr = lr.squeeze(0).float()
 
         if cfg.TEST.BBOX_REG:
+            print('here0')
             # Apply bounding-box regression deltas
             box_deltas = bbox_pred.data
             if cfg.TRAIN.BBOX_NORMALIZE_TARGETS_PRECOMPUTED:
+              print('here1')
             # Optionally normalize targets by a precomputed mean and stdev
               if args.class_agnostic:
+                  print('here2')
                   if args.cuda > 0:
                       box_deltas = box_deltas.view(-1, 4) * torch.FloatTensor(cfg.TRAIN.BBOX_NORMALIZE_STDS).cuda() \
                                 + torch.FloatTensor(cfg.TRAIN.BBOX_NORMALIZE_MEANS).cuda()
@@ -342,7 +339,7 @@ if __name__ == '__main__':
         if vis:
             im2show = np.copy(im)
         obj_dets, hand_dets = None, None
-        for j in xrange(1, len(pascal_classes)):
+        for j in range(1, len(pascal_classes)):
             # inds = torch.nonzero(scores[:,j] > thresh).view(-1)
             if pascal_classes[j] == 'hand':
               inds = torch.nonzero(scores[:,j]>thresh_hand).view(-1)

@@ -4,9 +4,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable
 from torch.autograd import Variable
-from model.utils.config import cfg
-from model.rpn.rpn import _RPN
-from model.extension_layers import extension_layers
+from src.lib.model.utils.config import cfg
+from src.lib.model.rpn.rpn import _RPN
+from src.lib.model.extension_layers import extension_layers
 
 
 from torchvision.ops import roi_align,roi_pool
@@ -16,10 +16,10 @@ from torchvision.ops import roi_align,roi_pool
 # from model.roi_pooling.modules.roi_pool import _RoIPooling
 # from model.roi_align.modules.roi_align import RoIAlignAvg
 
-from model.rpn.proposal_target_layer_cascade import _ProposalTargetLayer
+from src.lib.model.rpn.proposal_target_layer_cascade import _ProposalTargetLayer
 import time
 import pdb
-from model.utils.net_utils import _smooth_l1_loss, _crop_pool_layer, _affine_grid_gen, _affine_theta
+from src.lib.model.utils.net_utils import _smooth_l1_loss, _crop_pool_layer, _affine_grid_gen, _affine_theta
 
 class _fasterRCNN(nn.Module):
     """ faster RCNN """
