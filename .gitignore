@@ -8,7 +8,7 @@
 
 ## PyTorch
 
-data/
+handobdet/data/
 data_preparation/
 data_preparation_no_objectionable/
 data_to_release/
@@ -18,7 +18,7 @@ compare/
 # images/
 images_det/
 
-models/*
+handobdet/models/*
 predata_dandan/multitask/*.json
 predata_dandan/
 
