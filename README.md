@@ -21,14 +21,6 @@ More information can be found at our:
 The code should with most versions of pytorch,torchvision and numpy. You will also need matplotlib, and open-cv for visualizations.
 
 
-## Preparation
-
-First of all, clone the code
-```
-git clone https://github.com/ddshan/hand_object_detector && cd hand_object_detector
-```
-
-
 ## Environment & Compilation
 
 For convinience you can install the package using pip install -e .
@@ -62,12 +54,12 @@ models
 
 We did **not** train the contact_state, offset_vector and hand_side part for objects. We keep them just to make the data format consistent. So, only use the bbox and confidence score infomation for objects.  
 
-**Matching**:
 
-Check the additional [matching.py](https://github.com/ddshan/Hand_Object_Detector/blob/master/lib/model/utils/matching.py) script to match the detection results, **hand_dets** and **obj_dets**, if needed.  
 
 
 ### One Image Demo Output:
+
+Check out demo.py for a simple demo.
 
 Color definitions:
 * yellow: object bbox
